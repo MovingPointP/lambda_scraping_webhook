@@ -12,12 +12,13 @@ SCRAPING_URL = os.environ['scraping_url']
 SCRAPING_ID = os.environ['scraping_id']
 WORK_TITLE = os.environ['work_title']
 WEBHOOK_URL = os.environ['webhook_url']
-MENTION_TO = os.environ['mention_to']
+DISCORD_MENTION_ID = os.environ['discord_mention_id']
+DISCORD_MENTION_TARGET = os.environ['discord_mention_target']
 
 # ログ出力関数
 def logging(errorLv, lambdaName, errorMsg):
   loggingDateStr=(datetime.now()).strftime('%Y/%m/%d %H:%M:%S')
-  print(loggingDateStr + " " + lambdaName + " [" + errorLv + "] " + errorMsg)
+  print(loggingDateStr + ' ' + lambdaName + ' [' + errorLv + '] ' + errorMsg)
   return
 
 # 以前までのMaxIDを取得
@@ -66,17 +67,19 @@ def do_webhook(new_urls):
   headers = {'Content-Type': 'application/json'}
 
   for new_url in new_urls:
-    if MENTION_TO:
-      content = {'content': '<@&' + MENTION_TO + '>\n' + new_url}
-    else: 
+    if DISCORD_MENTION_TARGET == 'user':
+      content = {'content': '<@' + DISCORD_MENTION_ID + '>\n' + new_url}
+    elif DISCORD_MENTION_TARGET == 'role':
+      content = {'content': '<@&' + DISCORD_MENTION_ID + '>\n' + new_url}
+    else:
       content = {'content': new_url}
-      
-    response = requests.post(WEBHOOK_URL, json.dumps(content), headers=headers)
+
+    requests.post(WEBHOOK_URL, json.dumps(content), headers=headers)
 
 # Lambda起動用ハンドラー
 def lambda_handler(event, context):
   try:
-    logging("info", context.function_name, "process start")
+    logging('info', context.function_name, 'process start')
     
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('scrapings')
