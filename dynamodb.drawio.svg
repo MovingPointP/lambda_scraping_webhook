@@ -1,0 +1,62 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="211px" height="151px" viewBox="-0.5 -0.5 211 151" content="&lt;mxfile&gt;&lt;diagram id=&quot;silAKN7P2dsijedjTRNT&quot; name=&quot;ページ1&quot;&gt;7ZjRbtowFIafhtuJEELhNmnXTaNSBZV67WKTWDN25JgS+vQ7jm2SEKhMS7sNVULCPj4+sf/P/onohcmqvJUoz+4EJqw36OOyF173BoOgH4zhS0e2JhJOhiaQSoptUh2Y0xfiZtrommJStBKVEEzRvB1cCM7JQrViSEqxaactBWs/NUcp6QTmC8S60UeKVWai48FVHf9BaJq5JwejiRlZIZdsd1JkCItNIxTe9MJECqFMa1UmhGnxnC5m3vcjo7uFScKV14TIzHhGbG03N18ANMrTwq5Qbd22YbG5bir0pENxoZBUls6wDwHQWyHKiYRAUPUZQ3lBq3QTySjDU7QVa+UKuV68pCXBMwNH5wKnKRTTXV18CcXndjF6GDGacmgvYKv6ibEkBaxligplM7piWH2eiVSkbISsOLdErIiSW0ixo4OxBbV1KG1/U3PfHcusyTyyQWTPWrqrXeOAhiVyhM6oQ+d1KDN9luJMSPqiUTArXRNU1d/QFUMcDinCe6FYVJeyEpwylggmNE0uOOkA1UlYivwByZQoG8gF5aracxTDB1RI+t+iXgRrTaAf1H346HSpEsELJeHg6BoE+G2IZhgrkduijCxdfWk11u0noZRY2c4B2pE3bot36El3eA64Vx24979AnXtgRQU/CjrX44jNwNgQT5nBUvkcqrEcYHdQzZaCTWn3b5sAEZessqqMYkz4YcVH3oo3JB6fqLAtVitwcjXEwDI4UnDc1xwXHWy7dfqRHB+4pqBEGGglf17/ZZTOKE1uXORoAfY+NTNHe6yjj2Bdtsk0YAXhWdl7lTsz/MmXR3t59JFf5JM9+sAp+jCPdq9p+x49B0X+T4OeeMt9QQa9e++rMT4K+fuBKr22izRnf86XbM7Oi7/M+ZNeoIOBpzuH53Dn0J/u59xmgqmr5+/Ju0P6bk9+TdTTPXm/2pmv5rAD7w6V//7L8tmZnui/b2fsVe5dkKFb/3Vl0us/AMObPw==&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs>
+        <clipPath id="mx-clip-0-40-80-40-0">
+            <rect x="0" y="40" width="80" height="40"/>
+        </clipPath>
+        <clipPath id="mx-clip-86-40-124-40-0">
+            <rect x="86" y="40" width="124" height="40"/>
+        </clipPath>
+        <clipPath id="mx-clip-0-80-80-40-0">
+            <rect x="0" y="80" width="80" height="40"/>
+        </clipPath>
+        <clipPath id="mx-clip-86-80-124-40-0">
+            <rect x="86" y="80" width="124" height="40"/>
+        </clipPath>
+        <clipPath id="mx-clip-86-120-124-30-0">
+            <rect x="86" y="120" width="124" height="30"/>
+        </clipPath>
+    </defs>
+    <g>
+        <path d="M 0 40 L 0 0 L 210 0 L 210 40" fill="rgb(255, 255, 255)" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="all"/>
+        <path d="M 0 40 L 0 150 L 210 150 L 210 40" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="none"/>
+        <path d="M 0 40 L 210 40" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="none"/>
+        <path d="M 80 40 L 80 80 L 80 120 L 80 150" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="none"/>
+        <g fill="rgb(0, 0, 0)" font-family="Helvetica" font-weight="bold" pointer-events="none" text-anchor="middle" font-size="12px">
+            <text x="104.5" y="24.5">
+                Scrapings
+            </text>
+        </g>
+        <path d="M 0 40 M 80 40 M 80 80 M 0 80" fill="none" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="10" pointer-events="none"/>
+        <g fill="rgb(0, 0, 0)" font-family="Helvetica" font-weight="bold" pointer-events="none" clip-path="url(#mx-clip-0-40-80-40-0)" text-anchor="middle" font-size="12px">
+            <text x="39.5" y="64.5">
+                PK,Partion
+            </text>
+        </g>
+        <path d="M 80 40 M 210 40 M 210 80 M 80 80" fill="none" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="10" pointer-events="none"/>
+        <g fill="rgb(0, 0, 0)" font-family="Helvetica" font-weight="bold" text-decoration="underline" pointer-events="none" clip-path="url(#mx-clip-86-40-124-40-0)" font-size="12px">
+            <text x="87.5" y="71.5">
+                ID
+            </text>
+        </g>
+        <path d="M 0 80 M 210 80 M 210 120 L 0 120" fill="none" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="10" pointer-events="none"/>
+        <path d="M 0 80 M 80 80 M 80 120 M 0 120" fill="none" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="10" pointer-events="none"/>
+        <g fill="rgb(0, 0, 0)" font-family="Helvetica" font-weight="bold" pointer-events="none" clip-path="url(#mx-clip-0-80-80-40-0)" text-anchor="middle" font-size="12px">
+            <text x="39.5" y="104.5">
+                PK,Sort
+            </text>
+        </g>
+        <path d="M 80 80 M 210 80 M 210 120 M 80 120" fill="none" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="10" pointer-events="none"/>
+        <g fill="rgb(0, 0, 0)" font-family="Helvetica" font-weight="bold" text-decoration="underline" pointer-events="none" clip-path="url(#mx-clip-86-80-124-40-0)" font-size="12px">
+            <text x="87.5" y="104.5">
+                WorkTitle
+            </text>
+        </g>
+        <path d="M 0 120 M 80 120 M 80 150 M 0 150" fill="none" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="10" pointer-events="none"/>
+        <path d="M 80 120 M 210 120 M 210 150 M 80 150" fill="none" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="10" pointer-events="none"/>
+        <g fill="rgb(0, 0, 0)" font-family="Helvetica" pointer-events="none" clip-path="url(#mx-clip-86-120-124-30-0)" font-size="12px">
+            <text x="87.5" y="139.5">
+                MaxID
+            </text>
+        </g>
+    </g>
+</svg>
