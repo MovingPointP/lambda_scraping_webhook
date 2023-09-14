@@ -1,6 +1,7 @@
 # サイト固有のElementに対するURL, ID取得処理
 def unique_process(soup):
   ids = []
+  works = []
   urls = []
 
   section_elems = soup.find_all('section')
@@ -12,4 +13,4 @@ def unique_process(soup):
     url = section_elem.find('a', class_='entry-title-link')['href']
     urls.append(url)
   
-  return ids, urls
+  return ids, works, urls

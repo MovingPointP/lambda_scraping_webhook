@@ -14,34 +14,62 @@ WEBHOOK_URL = os.environ['webhook_url']
 DISCORD_MENTION_ID = os.environ['discord_mention_id']
 DISCORD_MENTION_TARGET = os.environ['discord_mention_target']
 
+# サイト固有のElementに対するID, Work, URL取得処理
+def unique_process(soup):
+  ids = []
+  works = []
+  urls = []
+
+  section_elems = soup.find_all('section')
+
+  for section_elem in section_elems:
+    id = section_elem['data-uuid']
+    ids.append(id)
+
+    url = section_elem.find('a', class_='entry-title-link')['href']
+    urls.append(url)
+  
+  return ids, works, urls
+
 # ログ出力関数
 def logging(errorLv, lambdaName, errorMsg):
   loggingDateStr=(datetime.now()).strftime('%Y/%m/%d %H:%M:%S')
   print(loggingDateStr + ' ' + lambdaName + ' [' + errorLv + '] ' + errorMsg)
   return
 
-# 以前までのMaxIDを取得
-def get_max_id(table):
+# index関数、存在しなければ0をreturn
+def find_index(l, x):
+    return l.index(x) if x in l else 0
+
+# 以前までのMaxID、MaxWorkを取得
+def get_max_data(table):
   query_data = table.get_item(
     Key = {
       'ID': SCRAPING_ID,
       'WorkTitle': WORK_TITLE
     }
   )
-  max_id = query_data['Item']['MaxID']
+  max_id = query_data['Item'].get('MaxID')
+  max_work = query_data['Item'].get('MaxWork')
 
-  return max_id
+  return max_id, max_work
 
-def update_max_id(table, max_id):
+#MaxDataでdynamoDBを更新
+def update_max_data(table, max_id, max_work):
+  if max_work:
+    expression = 'set MaxWork = :w'
+    value = {':w': max_work}
+  else:
+    expression = 'set MaxID = :i'
+    value = {':i': max_id}
+
   table.update_item(
     Key = {
       'ID': SCRAPING_ID,
       'WorkTitle': WORK_TITLE
     },
-    UpdateExpression='set MaxID = :m',
-    ExpressionAttributeValues = {
-      ':m' : max_id
-    }
+    UpdateExpression=expression,
+    ExpressionAttributeValues = value
   )
   return
 
@@ -70,26 +98,29 @@ def lambda_handler(event, context):
     response = requests.get(SCRAPING_URL)
     soup = bs(response.content, 'html.parser')
 
-    previous_max_id = get_max_id(table) 
-
-    ids, urls = unique_process(soup)
-
-    # 現在のMaxID
-    now_max_id = max(ids)
-
-    #IDに違いがない場合
-    if previous_max_id == now_max_id:
-      logging('success', context.function_name, 'no changes')
-      return {
-        'statusCode': 200,
-        'body': 'not update'  
-      }
+    previous_max_id, previous_max_work = get_max_data(table) 
     
-    #MaxIDをdynamoDBに登録
-    update_max_id(table, now_max_id)
+    ids,  works, urls = unique_process(soup)
 
-    # 以前までのMaxIDより新しいURL
-    new_urls = [urls[i] for i, x in enumerate(ids) if x > previous_max_id]
+    now_max_id = None if len(ids) == 0 else max(ids)
+    now_max_work = None if len(works) == 0 else works[0]
+
+    #MaxDataに違いがない場合
+    if previous_max_id == now_max_id and previous_max_work == now_max_work:
+        logging('success', context.function_name, 'no changes')
+        return {
+          'statusCode': 200,
+          'body': 'not update'  
+        }
+    
+    update_max_data(table, now_max_id, now_max_work)
+
+    # 以前までより新しいURL
+    if previous_max_id:
+      new_urls = urls[:find_index(ids, previous_max_id)]
+    else:
+      new_urls =  urls[:find_index(works, previous_max_work)]
+
     new_urls.reverse()
 
     do_webhook(new_urls)
@@ -101,8 +132,8 @@ def lambda_handler(event, context):
     }
     
   except Exception as error :
-    logging('error', context.function_name, error)
+    logging('error', context.function_name, str(error))
     return {
       'statusCode': 500,
-      'body': type(error) + ': ' + error
+      'body': str(type(error)) + ': ' + str(error)
     }

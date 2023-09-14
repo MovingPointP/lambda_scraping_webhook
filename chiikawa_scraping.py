@@ -3,6 +3,7 @@ import re
 # サイト固有のElementに対するURL, ID取得処理
 def unique_process(soup):
   ids = []
+  works = []
   urls = []
 
   atag_elems = soup.find_all('a', class_= 'create_time')
