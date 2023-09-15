@@ -6,7 +6,7 @@ def unique_process(soup):
   works = []
   urls = []
 
-  a_elems = soup.find_all('a', class_= 'create_time')
+  a_elems = soup.find_all('a', class_='card__header')
 
   for a_elem in a_elems:
     url = a_elem['href']
