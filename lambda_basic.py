@@ -68,8 +68,8 @@ def do_webhook(new_urls, hook_urls):
     else:
       content = {'content': new_url}
 
-  for hook_url in hook_urls:
-    requests.post(hook_url, json.dumps(content), headers=headers)
+    for hook_url in hook_urls:
+      requests.post(hook_url, json.dumps(content), headers=headers)
 
 # Lambda起動用ハンドラー
 def lambda_handler(event, context):
