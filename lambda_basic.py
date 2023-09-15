@@ -10,26 +10,8 @@ from bs4 import BeautifulSoup as bs
 SCRAPING_URL = os.environ['scraping_url']
 SCRAPING_ID = os.environ['scraping_id']
 WORK_TITLE = os.environ['work_title']
-WEBHOOK_URL = os.environ['webhook_url']
 DISCORD_MENTION_ID = os.environ['discord_mention_id']
 DISCORD_MENTION_TARGET = os.environ['discord_mention_target']
-
-# サイト固有のElementに対するID, Work, URL取得処理
-def unique_process(soup):
-  ids = []
-  works = []
-  urls = []
-
-  section_elems = soup.find_all('section')
-
-  for section_elem in section_elems:
-    id = section_elem['data-uuid']
-    ids.append(id)
-
-    url = section_elem.find('a', class_='entry-title-link')['href']
-    urls.append(url)
-  
-  return ids, works, urls
 
 # ログ出力関数
 def logging(errorLv, lambdaName, errorMsg):
@@ -42,7 +24,7 @@ def find_index(l, x):
     return l.index(x) if x in l else 0
 
 # 以前までのMaxID、MaxWorkを取得
-def get_max_data(table):
+def get_dynamodb(table):
   query_data = table.get_item(
     Key = {
       'ID': SCRAPING_ID,
@@ -51,11 +33,12 @@ def get_max_data(table):
   )
   max_id = query_data['Item'].get('MaxID')
   max_work = query_data['Item'].get('MaxWork')
+  hook_urls = query_data['Item'].get('HookURLs')
 
-  return max_id, max_work
+  return max_id, max_work, hook_urls
 
 #MaxDataでdynamoDBを更新
-def update_max_data(table, max_id, max_work):
+def update_dynamodb(table, max_id, max_work):
   if max_work:
     expression = 'set MaxWork = :w'
     value = {':w': max_work}
@@ -74,7 +57,7 @@ def update_max_data(table, max_id, max_work):
   return
 
 # Webhook
-def do_webhook(new_urls):
+def do_webhook(new_urls, hook_urls):
   headers = {'Content-Type': 'application/json'}
 
   for new_url in new_urls:
@@ -85,7 +68,8 @@ def do_webhook(new_urls):
     else:
       content = {'content': new_url}
 
-    requests.post(WEBHOOK_URL, json.dumps(content), headers=headers)
+  for hook_url in hook_urls:
+    requests.post(hook_url, json.dumps(content), headers=headers)
 
 # Lambda起動用ハンドラー
 def lambda_handler(event, context):
@@ -98,7 +82,7 @@ def lambda_handler(event, context):
     response = requests.get(SCRAPING_URL)
     soup = bs(response.content, 'html.parser')
 
-    previous_max_id, previous_max_work = get_max_data(table) 
+    previous_max_id, previous_max_work, hook_urls = get_dynamodb(table) 
     
     ids,  works, urls = unique_process(soup)
 
@@ -113,7 +97,7 @@ def lambda_handler(event, context):
           'body': 'not update'  
         }
     
-    update_max_data(table, now_max_id, now_max_work)
+    update_dynamodb(table, now_max_id, now_max_work)
 
     # 以前までより新しいURL
     if previous_max_id:
@@ -123,7 +107,7 @@ def lambda_handler(event, context):
 
     new_urls.reverse()
 
-    do_webhook(new_urls)
+    do_webhook(new_urls, hook_urls)
   
     logging('success', context.function_name, 'hooked')
     return {

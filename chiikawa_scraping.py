@@ -15,4 +15,4 @@ def unique_process(soup):
     id = re.findall(r'\d+', atag_elem['href'])[0]
     ids.append(id)
 
-  return ids, urls
+  return ids, works, urls
