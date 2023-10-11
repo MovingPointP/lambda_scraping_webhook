@@ -9,7 +9,7 @@ def unique_process(soup):
   a_elems = soup.find_all('a', class_= 'create_time')
 
   for a_elem in a_elems:
-    url = a_elem['href']
+    url = a_elem['href'].replace('twitter.com', 'fxtwitter.com').replace('x.com', 'fixupx.com')
     urls.append(url)
 
     id = re.findall(r'\d+', a_elem['href'])[0]
